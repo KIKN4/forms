@@ -45,12 +45,7 @@ export class SignUpComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.controls.confirmPassword.setValidators(
-      this.confirmPasswordValidator(this.controls.password),
-    );
-    this.controls.password.valueChanges.subscribe(() => {
-      this.controls.confirmPassword.updateValueAndValidity();
-    });
+    this.signupForm.addValidators(this.passwordsMatchValidator());
   }
 
   onSubmt() {
@@ -65,11 +60,13 @@ export class SignUpComponent implements OnInit {
     };
   }
 
-  confirmPasswordValidator(compareTo: FormControl<string | null>): ValidatorFn {
-    return (control: AbstractControl<string>): ValidationErrors | null => {
-      return control.value == compareTo.value
+  passwordsMatchValidator() {
+    return (control: AbstractControl): ValidationErrors | null => {
+      return control.value.password == control.value.confirmPassword
         ? null
-        : { confirmPassword: 'Passwords do not match' };
+        : {
+            passwordsMatch: 'Passwords do not match',
+          };
     };
   }
 }

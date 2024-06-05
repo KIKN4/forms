@@ -18,15 +18,17 @@ type Direction = 'asc' | 'desc';
 export class HomeComponent implements OnInit {
   private readonly router = inject(Router);
   private readonly activatedRoute = inject(ActivatedRoute);
+  private readonly productsService = inject(ProductsService);
+
   priceSort: Direction = 'asc';
   products: Product[] = [];
 
-  constructor(private productsService: ProductsService) {}
-
   ngOnInit(): void {
-    this.productsService.products$.subscribe((products) => {
-      this.products = products;
+    this.productsService.getProducts();
+    this.productsService.getProducts().subscribe((response) => {
+      this.products = response.products;
     });
+
     this.activatedRoute.queryParamMap.subscribe((queryParamMap) => {
       const direction = queryParamMap.get('priceSort') as Direction | null;
       if (direction) {
@@ -39,7 +41,7 @@ export class HomeComponent implements OnInit {
           }
         });
       }
-    })
+    });
   }
 
   onAddToCart(id: string) {

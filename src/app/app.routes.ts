@@ -21,6 +21,6 @@ export const routes: Routes = [
         (m) => m.ProductComponent,
       ),
   },
-  { path: '', redirectTo: 'auth/sign-up', pathMatch: 'full' },
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: '**', component: NotFoundComponent },
 ];

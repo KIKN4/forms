@@ -79,10 +79,11 @@
       formControlName="confirmPassword"
     />
     @if (
-      controls.confirmPassword.dirty &&
-      controls.confirmPassword.errors?.["confirmPassword"]
+      controls.confirmPassword.dirty && signupForm.errors?.["passwordsMatch"]
     ) {
-      <div class="mt-1 text-danger">Password do not Match</div>
+      <div class="mt-1 text-danger">
+        {{ signupForm.errors?.["passwordsMatch"] }}
+      </div>
     }
   </div>
   <button class="btn btn-primary" type="submit" [disabled]="signupForm.invalid">
